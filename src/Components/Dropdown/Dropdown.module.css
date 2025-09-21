@@ -1,0 +1,17 @@
+.select{
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    box-shadow: 0 3px 10px gray;
+    border-radius: 5px;
+}
+.button{
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    background-color: lightgreen;
+    box-shadow: 0 3px 10px gray;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
