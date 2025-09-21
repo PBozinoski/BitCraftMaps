@@ -8,7 +8,7 @@ const Card = ({ id, name, tier, playerId }) => {
   const idParam = ids.join(",");
 
   // Build URL; only include playerId if present
-  const base = `https://bitcraftmap.com/?resourceId=${idParam}`;
+  const base = `https://bitcraftmap.com/?resourceId=${idParam}&regionId=1,2,3,4,5,6,7,8,9`;
   const url = playerId ? `${base}&playerId=${playerId}` : base;
 
   return (
