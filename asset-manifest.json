@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/BitCraftMaps/static/css/main.37a8fa33.css",
-    "main.js": "/BitCraftMaps/static/js/main.a1ad0a54.js",
+    "main.js": "/BitCraftMaps/static/js/main.b98c3f96.js",
     "static/js/453.96453769.chunk.js": "/BitCraftMaps/static/js/453.96453769.chunk.js",
     "index.html": "/BitCraftMaps/index.html",
     "main.37a8fa33.css.map": "/BitCraftMaps/static/css/main.37a8fa33.css.map",
-    "main.a1ad0a54.js.map": "/BitCraftMaps/static/js/main.a1ad0a54.js.map",
+    "main.b98c3f96.js.map": "/BitCraftMaps/static/js/main.b98c3f96.js.map",
     "453.96453769.chunk.js.map": "/BitCraftMaps/static/js/453.96453769.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.37a8fa33.css",
-    "static/js/main.a1ad0a54.js"
+    "static/js/main.b98c3f96.js"
   ]
 }
