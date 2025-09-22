@@ -13,7 +13,7 @@ const MainComp = () => {
 
   return (
     <div className={Styles.main}>
-      <h1 className={Styles.title}>Select a Resource:</h1>
+      <h2 className={Styles.title}>BitCraft Resource and Player Tracker</h2>
       <Dropdown
         items={data}
         value={selectedValue}

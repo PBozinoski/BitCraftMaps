@@ -1,11 +1,8 @@
-import { useMemo, useState } from "react";
-import Styles from './Dropdown.module.css'
+import { useState } from "react";
+import Styles from "./Dropdown.module.css";
 import Card from "../Card/Card";
 
-
-
-const Dropdown = ({ dataset, tagValue, onTagChange, tierValue, onTierChange }) => {
-      const data = useMemo(() => [
+      const DATA = [
   {
     "id": 1,
     "name": "Sticks",
@@ -25221,101 +25218,120 @@ const Dropdown = ({ dataset, tagValue, onTagChange, tierValue, onTierChange }) =
     ],
     "scheduled_respawn_time": 43200.0,
     "not_respawning": false
-  }
-],[]);
+  }];
 
-  // --- Player dropdown setup ---
-  const players = ["Boz", "NotBoz", "Massive", "gon", "Toxx", "Toxxx"];
-  // Fill in IDs as you get them. Boz provided earlier:
-  const PLAYER_IDS = {
-    Boz: "576460752315731082",
-    NotBoz: "216172782170234533",
-    Massive: "576460752315732959",
-    gon: "504403158276519614",
-    Toxx: "432345564269488986",
-    Toxxx: "288230376264038679",
-  };
+const PLAYERS = ["Boz", "NotBoz", "Massive", "gon", "Toxx", "Toxxx"];
+const PLAYER_IDS = {
+  Boz: "576460752315731082",
+  NotBoz: "216172782170234533",
+  Massive: "576460752315732959",
+  gon: "504403158276519614",
+  Toxx: "432345564269488986",
+  Toxxx: "288230376264038679",
+};
 
- const [selectedPlayer, setSelectedPlayer] = useState("");
-  const selectedPlayerId = PLAYER_IDS[selectedPlayer] || "";
+const ALL_REGIONS = [1,2,3,4,5,6,7,8,9];
 
-  // --- Filters state ---
+function Dropdown() {
+  const [selectedPlayer, setSelectedPlayer] = useState("");
+  const [selectedRegions, setSelectedRegions] = useState([]);
   const [selectedTag, setSelectedTag] = useState("");
   const [selectedTier, setSelectedTier] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
 
-  // --- Unique dropdown options ---
-  const uniqueTags = useMemo(
-    () => [...new Set(data.map(i => i.tag))].filter(Boolean),
-    [data]
-  );
+  const selectedPlayerId = PLAYER_IDS[selectedPlayer] || "";
 
-  const uniqueTiers = useMemo(
-    () =>
-      [...new Set(data.map(i => i.tier))]
-        .filter(t => Number.isFinite(t) && t >= 0)
-        .sort((a, b) => a - b),
-    [data]
-  );
+  const uniqueTags = Array.from(new Set(DATA.map(i => i.tag))).filter(Boolean);
+  const uniqueTiers = Array.from(new Set(DATA.map(i => i.tier)))
+    .filter(t => Number.isFinite(t) && t >= 0)
+    .sort((a,b)=>a-b);
+
+  const toggleRegion = (r) => {
+    setFilteredItems([]); // invalidate old results
+    setSelectedRegions(prev =>
+      prev.includes(r) ? prev.filter(x => x !== r) : [...prev, r].sort((a,b)=>a-b)
+    );
+  };
+  const selectAllRegions = () => { setSelectedRegions([...ALL_REGIONS]); setFilteredItems([]); };
+  const clearRegions = () => { setSelectedRegions([]); setFilteredItems([]); };
 
   const handleFilter = () => {
-    const filtered = data
+    const res = DATA
       .filter(i => (!selectedTag || i.tag === selectedTag))
       .filter(i => (!selectedTier || i.tier === Number(selectedTier)))
       .filter(i => i.id && i.name);
-    setFilteredItems(filtered);
+    setFilteredItems(res);
   };
 
   return (
     <div>
-      {/* Player Dropdown */}
-<select
-  className={Styles.select}
-  value={selectedPlayer}
-  onChange={e => setSelectedPlayer(e.target.value)}
->
-  <option value="" disabled>Select Player</option>
-  {players.map(p => (
-    <option key={p} value={p}>
-      {p}
-    </option>
-  ))}
-</select>
+      {/* Player */}
+      <select
+        className={Styles.select}
+        value={selectedPlayer}
+        onChange={(e) => {
+          setSelectedPlayer(e.target.value);
+          // reset downstream
+          setSelectedTag("");
+          setSelectedTier("");
+          setFilteredItems([]);
+        }}
+      >
+        <option value="" disabled>Select Player</option>
+        {PLAYERS.map(p => <option key={p} value={p}>{p}</option>)}
+      </select>
 
-{/* Tag Dropdown - unlocked once player is chosen */}
-<select
-  className={Styles.select}
-  value={selectedTag}
-  onChange={e => setSelectedTag(e.target.value)}
-  disabled={!selectedPlayer}   // locked until player chosen
->
-  <option value="">Select Tag</option>
-  {uniqueTags.map(tag => (
-    <option key={tag} value={tag}>{tag}</option>
-  ))}
-</select>
+      {/* Regions (enabled after Player) */}
+      <fieldset className={Styles.regionFieldset} disabled={!selectedPlayer}>
+        <legend>Regions</legend>
+        <div className={Styles.regionButtons}>
+          <button type="button" onClick={selectAllRegions}>Select All</button>
+          <button type="button" onClick={clearRegions}>Clear</button>
+        </div>
+        <div className={Styles.regionGrid}>
+          {ALL_REGIONS.map(r => (
+            <label key={r} className={Styles.regionItem}>
+              <input
+                type="checkbox"
+                checked={selectedRegions.includes(r)}
+                onChange={() => toggleRegion(r)}
+              />
+              <span>Region {r}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
-{/* Tier Dropdown - unlocked once tag is chosen */}
-<select
-  className={Styles.select}
-  value={selectedTier}
-  onChange={e => setSelectedTier(e.target.value)}
-  disabled={!selectedTag}   // locked until tag chosen
->
-  <option value="">Select Tier</option>
-  {uniqueTiers.map(t => (
-    <option key={t} value={t}>{t}</option>
-  ))}
-</select>
+      {/* Tag (unlocks after Player) */}
+      <select
+        className={Styles.select}
+        value={selectedTag}
+        onChange={(e) => { setSelectedTag(e.target.value); setSelectedTier(""); setFilteredItems([]); }}
+        disabled={!selectedPlayer}
+      >
+        <option value="">Select Resource</option>
+        {uniqueTags.map(tag => <option key={tag} value={tag}>{tag}</option>)}
+      </select>
 
-{/* Button - unlocked once tier is chosen */}
-<button
-  className={Styles.button}
-  onClick={handleFilter}
-  disabled={!selectedTier}   // locked until tier chosen
->
-  Filter Data
-</button>
+      {/* Tier (unlocks after Tag) */}
+      <select
+        className={Styles.select}
+        value={selectedTier}
+        onChange={(e) => { setSelectedTier(e.target.value); setFilteredItems([]); }}
+        disabled={!selectedTag}
+      >
+        <option value="">Select Tier</option>
+        {uniqueTiers.map(t => <option key={t} value={t}>{t}</option>)}
+      </select>
+
+      {/* Button (unlocks after Tier) */}
+      <button
+        className={Styles.button}
+        onClick={handleFilter}
+        disabled={!selectedTier}
+      >
+        Filter Data
+      </button>
 
       {/* Cards */}
       <div className={Styles.cards}>
@@ -25326,22 +25342,24 @@ const Dropdown = ({ dataset, tagValue, onTagChange, tierValue, onTierChange }) =
             name={item.name}
             tier={item.tier}
             playerId={selectedPlayerId}
+            regions={selectedRegions}
           />
         ))}
 
-        {/* Combined "All resources" card */}
+        {/* Combined "All resources" */}
         {filteredItems.length > 1 && (
           <Card
             key="all-resources"
-            id={filteredItems.map(i => i.id)} // array of IDs
+            id={filteredItems.map(i => i.id)}
             name="All resources"
             tier={null}
             playerId={selectedPlayerId}
+            regions={selectedRegions}
           />
         )}
       </div>
     </div>
   );
-};
+}
 
 export default Dropdown;
