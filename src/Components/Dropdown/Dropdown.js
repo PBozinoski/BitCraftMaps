@@ -25282,7 +25282,7 @@ function Dropdown() {
       </select>
 
       {/* Regions (enabled after Player) */}
-      <fieldset className={Styles.regionFieldset} disabled={!selectedPlayer}>
+      <fieldset className={Styles.regionFieldset}>
         <legend>Regions</legend>
         <div className={Styles.regionButtons}>
           <button type="button" onClick={selectAllRegions}>Select All</button>
@@ -25307,7 +25307,7 @@ function Dropdown() {
         className={Styles.select}
         value={selectedTag}
         onChange={(e) => { setSelectedTag(e.target.value); setSelectedTier(""); setFilteredItems([]); }}
-        disabled={!selectedPlayer}
+        //disabled={!selectedPlayer}
       >
         <option value="">Select Resource</option>
         {uniqueTags.map(tag => <option key={tag} value={tag}>{tag}</option>)}
