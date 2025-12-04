@@ -25224,6 +25224,7 @@ const PLAYERS = ["Boz", "NotBoz", "Massive", "gon", "Toxx", "Toxxx"];
 const PLAYER_IDS = {
   Boz: "576460752315731082",
   NotBoz: "216172782170234533",
+  Jetsam: "144115188248723497",
   Massive: "576460752315732959",
   gon: "504403158276519614",
   Toxx: "432345564269488986",
