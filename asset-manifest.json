@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/BitCraftMaps/static/css/main.37a8fa33.css",
-    "main.js": "/BitCraftMaps/static/js/main.3a7b2e95.js",
-    "static/js/453.96453769.chunk.js": "/BitCraftMaps/static/js/453.96453769.chunk.js",
-    "index.html": "/BitCraftMaps/index.html",
-    "main.37a8fa33.css.map": "/BitCraftMaps/static/css/main.37a8fa33.css.map",
-    "main.3a7b2e95.js.map": "/BitCraftMaps/static/js/main.3a7b2e95.js.map",
-    "453.96453769.chunk.js.map": "/BitCraftMaps/static/js/453.96453769.chunk.js.map"
+    "main.css": "/BitcraftResources/static/css/main.37a8fa33.css",
+    "main.js": "/BitcraftResources/static/js/main.d03e9477.js",
+    "static/js/453.96453769.chunk.js": "/BitcraftResources/static/js/453.96453769.chunk.js",
+    "index.html": "/BitcraftResources/index.html",
+    "main.37a8fa33.css.map": "/BitcraftResources/static/css/main.37a8fa33.css.map",
+    "main.d03e9477.js.map": "/BitcraftResources/static/js/main.d03e9477.js.map",
+    "453.96453769.chunk.js.map": "/BitcraftResources/static/js/453.96453769.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.37a8fa33.css",
-    "static/js/main.3a7b2e95.js"
+    "static/js/main.d03e9477.js"
   ]
 }
